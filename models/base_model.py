@@ -42,3 +42,8 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
+
+    def set_attribute(self, key, value):
+        """method to update the attribute of an object with the
+        given value"""
+        setattr(self, key, value)
