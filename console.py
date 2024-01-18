@@ -67,9 +67,24 @@ class HBNBCommand(cmd.Cmd):
         """command handler for the create command
         that creates a new BaseModel instance"""
         args_list = line.split()
+        len_ = len(args_list)
         try:
             if args_list[0] in classes:
                 my_obj = classes[args_list[0]]()
+                for i in range(1, len_):
+                    param = args_list[i]
+                    key_value = param.split('=')
+                    if len(key_value) != 2:
+                        continue
+                    if (key_value[0] == "" or key_value[1] == ""):
+                        continue
+                    key = key_value[0]
+                    value = eval(key_value[1])
+                    if type(value) not in [str, float, int]:
+                        continue
+                    if type(value) is str:
+                        value = value.replace("_", " ")
+                    my_obj.set_attribute(key, value)
                 my_obj.save()
                 print(my_obj.id)
             else:
