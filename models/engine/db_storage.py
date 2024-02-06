@@ -40,7 +40,7 @@ class DBStorage:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 dict_[key] = obj
         else:
-            classes = [City, State, Place, User, Amenity, Review]
+            classes = [City, State]
             for class_ in classes:
                 cls_objects = self.__session.query(class_)
                 for obj in cls_objects:
