@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
-from models import storage
+import models
 import shlex
 
 
@@ -17,7 +17,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
-        objects = storage.all()
+        objects = models.storage.all()
         all_cities = []
         my_cities = []
         for key in objects:
