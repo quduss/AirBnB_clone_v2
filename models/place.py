@@ -34,9 +34,12 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
 
+    user = relationship("User", back_populates="places")
+    cities = relationship("City", back_populates="places")
+
     if getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", cascade='all, delete, delete-orphan',
-                               backref="place")
+                               back_populates="place")
 
         amenities = relationship("Amenity", secondary=place_amenity,
                                  viewonly=False,
@@ -70,9 +73,8 @@ class Place(BaseModel, Base):
             return my_amenities
 
         @amenities.setter
-        def amenities(self, id_):
+        def amenities(self, obj):
             """Appends an amenity.id to amenity_ids"""
-            key = "Amenity." + id_
-            all_objects = models.storage.all()
-            if key in all_objects:
-                self.amenity_ids.append(id_)
+            from models.amenity import Amenity
+            if type(obj) is Amenity and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
