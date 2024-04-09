@@ -1,18 +1,18 @@
 #!/usr/bin/python3
 """fabric script that uploads a .tgz archive to my servers
 . It also decompresses the archive in the servers"""
-
-
 import os
 from fabric.api import *
+
+
+env.user = 'ubuntu'
+env.hosts = ['100.24.244.250', '54.161.241.33']
 
 
 def do_deploy(archive_path):
     """task that creates the archive"""
     if not os.path.exists(archive_path):
         return False
-    env.user = 'ubuntu'
-    env.hosts = ['100.24.244.250', '54.161.241.33']
 
     copy_tgz = archive_path[:]
     copy_tgz = copy_tgz.split('/')
@@ -22,13 +22,15 @@ def do_deploy(archive_path):
         return False
     copy = copy_tgz.split('.tgz')[0]
     sudo(f'mkdir /data/web_static/releases/{copy}')
-    result = sudo(f'tar -xzvf /tmp/{copy_tgz} -C /data/web_static/releases/{copy}')
+    comm = f'tar -xzvf /tmp/{copy_tgz} -C /data/web_static/releases/{copy}'
+    result = sudo(comm)
     if result.failed:
         return False
     result = sudo(f'rm /tmp/{copy_tgz} /data/web_static/current')
     if result.failed:
         return False
-    result = sudo(f'ln -s /data/web_static/releases/{copy} /data/web_static/current')
+    comm = f'ln -s /data/web_static/releases/{copy} /data/web_static/current'
+    result = sudo(comm)
     if result.failed:
         return False
     return True
