@@ -21,7 +21,10 @@ def do_deploy(archive_path):
     if upload.failed:
         return False
     copy = copy_tgz.split('.tgz')[0]
-    sudo(f'mkdir /data/web_static/releases/{copy}')
+    comm = f'mkdir /data/web_static/releases/{copy}'
+    result = sudo(comm)
+    if result.failed:
+        return False
     comm = f'tar -xzvf /tmp/{copy_tgz} -C /data/web_static/releases/{copy}'
     result = sudo(comm)
     if result.failed:
