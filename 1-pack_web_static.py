@@ -3,13 +3,12 @@
 files in the web_static directory of AirBnB_v2"""
 
 
-from fabric import task
 from datetime import datetime
 import os
+from fabric.api import *
 
 
-@task
-def do_pack(c):
+def do_pack():
     """task that creates the archive"""
     # Create 'versions' directory if it doesn't exist
     if not os.path.exists('versions'):
@@ -21,10 +20,10 @@ def do_pack(c):
     archive_path = os.path.join('versions', filename)
 
     # Compress the web_static folder into a .tgz archive
-    result = c.local(f'tar -czvf {archive_path} web_static')
+    result = local(f'tar -czvf {archive_path} web_static', capture=True)
 
     # Check if the archive was created successfully
-    if result.ok:
+    if result.succeeded:
         return archive_path
     else:
         return None
