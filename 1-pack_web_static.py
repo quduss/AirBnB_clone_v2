@@ -7,6 +7,7 @@ from fabric import task
 from datetime import datetime
 import os
 
+
 @task
 def do_pack(c):
     """task that creates the archive"""
