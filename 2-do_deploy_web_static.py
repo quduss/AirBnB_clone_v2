@@ -29,6 +29,16 @@ def do_deploy(archive_path):
     result = sudo(f'rm /tmp/{copy_tgz} /data/web_static/current')
     if result.failed:
         return False
+    string_1 = f'mv /data/web_static/releases/{copy}/web_static/*'
+    string_2 = f' /data/web_static/releases/{copy}'
+    comm = f'{string_1}{string_2}'
+    result = sudo(comm)
+    if result.failed:
+        return False
+    comm = f'rm -rf /data/web_static/releases/{copy}/web_static'
+    result = sudo(comm)
+    if result.failed:
+        return False
     comm = f'ln -s /data/web_static/releases/{copy} /data/web_static/current'
     result = sudo(comm)
     if result.failed:
