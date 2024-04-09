@@ -33,4 +33,7 @@ def do_deploy(archive_path):
     result = sudo(comm)
     if result.failed:
         return False
+    result = sudo('chown -R ubuntu:ubuntu /data')
+    if result.failed:
+        return False
     return True
