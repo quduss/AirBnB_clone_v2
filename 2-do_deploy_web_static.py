@@ -25,11 +25,11 @@ def do_deploy(archive_path):
     result = sudo(comm)
     if result.failed:
         return False
-    comm = f'tar -xzvf /tmp/{copy_tgz} -C /data/web_static/releases/{copy}'
+    comm = f'tar -xzf /tmp/{copy_tgz} -C /data/web_static/releases/{copy}'
     result = sudo(comm)
     if result.failed:
         return False
-    result = sudo(f'rm /tmp/{copy_tgz} /data/web_static/current')
+    result = sudo(f'rm /tmp/{copy_tgz}')
     if result.failed:
         return False
     string_1 = f'mv /data/web_static/releases/{copy}/web_static/*'
@@ -39,6 +39,10 @@ def do_deploy(archive_path):
     if result.failed:
         return False
     comm = f'rm -rf /data/web_static/releases/{copy}/web_static'
+    result = sudo(comm)
+    if result.failed:
+        return False
+    comm = f'rm -rf /data/web_static/current'
     result = sudo(comm)
     if result.failed:
         return False
