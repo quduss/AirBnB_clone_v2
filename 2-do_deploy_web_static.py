@@ -22,35 +22,32 @@ def do_deploy(archive_path):
         return False
     copy = copy_tgz.split('.tgz')[0]
     comm = f'mkdir /data/web_static/releases/{copy}'
-    result = sudo(comm)
+    result = run(comm)
     if result.failed:
         return False
     comm = f'tar -xzf /tmp/{copy_tgz} -C /data/web_static/releases/{copy}'
-    result = sudo(comm)
+    result = run(comm)
     if result.failed:
         return False
-    result = sudo(f'rm /tmp/{copy_tgz}')
+    result = run(f'rm /tmp/{copy_tgz}')
     if result.failed:
         return False
     string_1 = f'mv /data/web_static/releases/{copy}/web_static/*'
     string_2 = f' /data/web_static/releases/{copy}'
     comm = f'{string_1}{string_2}'
-    result = sudo(comm)
+    result = run(comm)
     if result.failed:
         return False
     comm = f'rm -rf /data/web_static/releases/{copy}/web_static'
-    result = sudo(comm)
+    result = run(comm)
     if result.failed:
         return False
     comm = f'rm -rf /data/web_static/current'
-    result = sudo(comm)
+    result = run(comm)
     if result.failed:
         return False
     comm = f'ln -s /data/web_static/releases/{copy} /data/web_static/current'
-    result = sudo(comm)
-    if result.failed:
-        return False
-    result = sudo('chown -R ubuntu:ubuntu /data')
+    result = run(comm)
     if result.failed:
         return False
     return True
