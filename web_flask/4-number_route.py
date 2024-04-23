@@ -37,6 +37,7 @@ def python_is_text(text="is cool"):
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def number_route(n):
+    """Defining route /number/<n> where n must be an integer"""
     return f'{n} is a number'
 
 
