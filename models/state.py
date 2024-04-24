@@ -20,6 +20,8 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
+        """returns all cities of the state. This
+        is for FileStorage"""
         objects = models.storage.all()
         all_cities = []
         my_cities = []
