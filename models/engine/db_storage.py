@@ -1,4 +1,6 @@
-from models.base_model import Base
+#!/usr/bin/python3
+""" DBStorage class """
+from models.biase_model import Base
 from sqlalchemy import create_engine
 from os import getenv
 from models.city import City
