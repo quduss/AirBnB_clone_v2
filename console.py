@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """command line interpreter for testing and debugging"""
 import cmd
+from models import storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -8,7 +9,6 @@ from models.review import Review
 from models.place import Place
 from models.amenity import Amenity
 from models.city import City
-import models
 import re
 
 
