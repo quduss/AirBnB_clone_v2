@@ -114,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
             if args[0] in classes:
                 try:
                     key = f"{args[0]}.{args[1]}"
-                    my_dict = models.storage.all()
+                    my_dict = storage.all()
                     if key in my_dict:
                         print(my_dict[key])
                     else:
@@ -133,10 +133,10 @@ class HBNBCommand(cmd.Cmd):
             if args[0] in classes:
                 try:
                     key = f"{args[0]}.{args[1]}"
-                    my_dict = models.storage.all()
+                    my_dict = storage.all()
                     if key in my_dict:
                         del my_dict[key]
-                        models.storage.save()
+                        storage.save()
                     else:
                         nif()
                 except IndexError:
@@ -150,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
         """prints the list of string representations of all
         instances"""
         args = line.split()
-        my_dict = models.storage.all()
+        my_dict = storage.all()
         my_list = []
         try:
             if args[0] in classes:
@@ -172,7 +172,7 @@ class HBNBCommand(cmd.Cmd):
             if args[0] in classes:
                 try:
                     key = f"{args[0]}.{args[1]}"
-                    my_dict = models.storage.all()
+                    my_dict = storage.all()
                     if key in my_dict:
                         try:
                             if args[2]:
@@ -201,8 +201,8 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(args[0])
         elif args[1] == "count()":
             count = 0
-            for key in models.storage.all().keys():
-                to_dict = models.storage.all()[key].to_dict()
+            for key in storage.all().keys():
+                to_dict = storage.all()[key].to_dict()
                 if args[0] == to_dict["__class__"]:
                     count += 1
             print(count)
