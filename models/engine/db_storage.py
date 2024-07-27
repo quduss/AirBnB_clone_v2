@@ -3,12 +3,6 @@
 from models.base_model import Base
 from sqlalchemy import create_engine
 from os import getenv
-from models.city import City
-from models.state import State
-from models.place import Place
-from models.user import User
-from models.amenity import Amenity
-from models.review import Review
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
@@ -42,6 +36,13 @@ class DBStorage:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 dict_[key] = obj
         else:
+            from models.city import City
+            from models.state import State
+            from models.place import Place
+            from models.user import User
+            from models.amenity import Amenity
+            from models.review import Review
+
             classes = [City, State, User, Place, Review, Amenity]
             for class_ in classes:
                 cls_objects = self.__session.query(class_)
@@ -66,6 +67,13 @@ class DBStorage:
     def reload(self):
         """create all tables in the database
         create the current database session(self.__session)"""
+        from models.city import City
+        from models.state import State
+        from models.place import Place
+        from models.user import User
+        from models.amenity import Amenity
+        from models.review import Review
+
         Base.metadata.create_all(self.__engine)
         sess = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess)
