@@ -50,4 +50,5 @@ def do_deploy(archive_path):
     result = run(comm)
     if result.failed:
         return False
+    print("New version deployed!")
     return True
